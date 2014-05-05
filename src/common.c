@@ -1,0 +1,115 @@
+/*
+ * Written and Improved by Ritvik Choudhary <ritvik@outlook.com>
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "common.h"
+
+int idevicerestore_debug = 0;
+
+int write_file(const char* filename, const void* data, size_t size) {
+	size_t bytes = 0;
+	FILE* file = NULL;
+
+	debug("Writing data to %s\n", filename);
+	file = fopen(filename, "wb");
+	if (file == NULL) {
+		error("read_file: Unable to open file %s\n", filename);
+		return -1;
+	}
+
+	bytes = fwrite(data, 1, size, file);
+	fclose(file);
+
+	if (bytes != size) {
+		error("ERROR: Unable to write entire file: %s: %d of %d\n", filename, (int)bytes, (int)size);
+		return -1;
+	}
+
+	return size;
+}
+
+int read_file(const char* filename, void** data, size_t* size) {
+	size_t bytes = 0;
+	size_t length = 0;
+	FILE* file = NULL;
+	char* buffer = NULL;
+	debug("Reading data from %s\n", filename);
+
+	*size = 0;
+	*data = NULL;
+
+	file = fopen(filename, "rb");
+	if (file == NULL) {
+		error("read_file: File %s not found\n", filename);
+		return -1;
+	}
+
+	fseek(file, 0, SEEK_END);
+	length = ftell(file);
+	rewind(file);
+
+	buffer = (char*) malloc(length);
+	if (buffer == NULL) {
+		error("ERROR: Out of memory\n");
+		fclose(file);
+		return -1;
+	}
+	bytes = fread(buffer, 1, length, file);
+	fclose(file);
+
+	if (bytes != length) {
+		error("ERROR: Unable to read entire file\n");
+		free(buffer);
+		return -1;
+	}
+
+	*size = length;
+	*data = buffer;
+	return 0;
+}
+
+void debug_plist(plist_t plist) {
+	int size = 0;
+	char* data = NULL;
+	plist_to_xml(plist, &data, &size);
+	info("%s", data);
+	free(data);
+}
+
+void print_progress_bar(double progress) {
+	int i = 0;
+	if(progress < 0) return;
+	if(progress > 100) progress = 100;
+	info("\r[");
+	for(i = 0; i < 50; i++) {
+		if(i < progress / 2) info("=");
+		else info(" ");
+	}
+	info("] %5.1f%%", progress);
+	if(progress == 100) info("\n");
+	fflush(stdout);
+}
+
+#define GET_RAND(min, max) ((rand() % (max - min)) + min)
+
+char *generate_guid()
+{
+	char *guid = (char *) malloc(sizeof(char) * 37);
+	const char *chars = "ABCDEF0123456789";
+	srand(time(NULL));
+	int i = 0;
+
+	for (i = 0; i < 36; i++) {
+		if (i == 8 || i == 13 || i == 18 || i == 23) {
+			guid[i] = '-';
+			continue;
+		} else {
+			guid[i] = chars[GET_RAND(0, 16)];
+		}
+	}
+	guid[36] = '\0';
+	return guid;
+}

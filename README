@@ -1,0 +1,34 @@
+
+## We here need ideviceactivate to activate the device
+
+**ideviceactivate is the courtesy of posixninja and his libraries**
+
+git clone http://github.com/posixninja/ideviceactivate.git
+cd ideviceactivate 
+make
+
+## idevicerestore may be required to run the device as root, so the following can be done:
+
+idevicerestore [-d] [-u] [-c] [-v] [-h] <input.ipsw>
+
+	-v, 		enable incremental levels of verboseness  
+	-d, 		enable communication debugging
+ 	-u, 		target specific device by its 40-digit device 	UUID
+  	-h, 		prints usage information
+  	-c, 		restore with a custom firmware
+  
+
+
+## idevicerestore may be required to run the device as root, so the following can be done:
+
+./ideviceactivate [-x] [-d] [-h] [-u] [-f]
+
+  -x		deactivate the target device
+  -d		enable communication debugging
+  -h		prints usage information
+  -u UUID	target specific device by its 40-digit device UUID
+  -f FILE	activates device with local activation record
+
+Thanks for going thorugh all of this.
+
+If you would like to contribute, simply fork, make something cool, pull request, and if we deem it as good enough, we will accept it.
