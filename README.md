@@ -18,4 +18,4 @@ idevicerestore [-d] [-u] [-c] [-v] [-h] <input.ipsw>
   
 Thanks for going thorugh all of this.
 
-If you would like to contribute, simply fork, make something cool, pull request, and if we deem it as good enough, we will accept it.
+If you would like to contribute, simply fork, make something cool, and make a pull request
