@@ -16,6 +16,5 @@ idevicerestore [-d] [-u] [-c] [-v] [-h] <input.ipsw>
   -c, 		restore with a custom firmware
   
   
-Thanks for going thorugh all of this.
 
 If you would like to contribute, simply fork, make something cool, and make a pull request
