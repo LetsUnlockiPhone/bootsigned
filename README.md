@@ -5,7 +5,7 @@ Signed boot for iPhone and iPad with support from the jailbreak community.
 
 This signed boot library requires ideviceactivate library.
 
-####### idevicerestore may be required to run the device as root, so the following can be done:
+#### idevicerestore may be required to run the device as root, so the following can be done:
 
 idevicerestore [-d] [-u] [-c] [-v] [-h] <input.ipsw>
 
